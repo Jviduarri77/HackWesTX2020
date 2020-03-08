@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="4090,1080" sap2010:WorkflowViewState.IdRef="Main_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="595,1377" sap2010:WorkflowViewState.IdRef="Main_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities.XamlIntegration</x:String>
@@ -22,6 +22,7 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Collections</x:String>
+      <x:String>UiPath.CV.Extensions</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -42,303 +43,398 @@
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Agent Assistant Robot" sap:VirtualizedContainerService.HintSize="4070,1020" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence DisplayName="Agent Assistant Robot" sap:VirtualizedContainerService.HintSize="575,1154" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
-      <Variable x:TypeArguments="ui:Window" Name="finaleWin" />
-      <Variable x:TypeArguments="ui:EventInfo" Name="keyPresses" />
+      <Variable x:TypeArguments="x:String" Name="noteString">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" Value="" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="x:String" Name="variable1" />
+      <Variable x:TypeArguments="x:String" Name="chars" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment sap:VirtualizedContainerService.HintSize="4028,153" sap2010:WorkflowViewState.IdRef="Comment_5" Text="// Convert piano presses to Finale score notes. &#xD;&#xA;//Very unfinished. &#xD;&#xA;//Currently can go up from A to G and then reset back to A&#xD;&#xA;//Future plans to store where the mouse clicks and then turn them into key presses after user is done" />
-    <While sap:VirtualizedContainerService.HintSize="4028,735" sap2010:WorkflowViewState.IdRef="While_4">
+    <ui:Comment sap:VirtualizedContainerService.HintSize="533,348" sap2010:WorkflowViewState.IdRef="Comment_5" Text="// Convert piano presses to Finale score notes. &#xD;&#xA;&#xD;&#xA;//Must have https://www.onlinepianist.com/virtual-piano and Finale opened.&#xD;&#xA;&#xD;&#xA;//Currently concatenates strings to develop notes for later for loop&#xD;&#xA;&#xD;&#xA;//Needs Fixing: Can't play the same note multiple times. Only can start at A and end at G. Exits main loop at press of G for now&#xD;&#xA;&#xD;&#xA;//Future Plans: Creating a website that generates the sheet music rather than requiring users to have Finale purchased. &#xD;&#xA;" />
+    <While sap:VirtualizedContainerService.HintSize="533,220" sap2010:WorkflowViewState.IdRef="While_4">
+      <While.Variables>
+        <Variable x:TypeArguments="x:Boolean" Default="True" Name="flag" />
+      </While.Variables>
       <While.Condition>
-        <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_12" Value="True" />
+        <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="flag" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_1" />
       </While.Condition>
-      <Sequence sap:VirtualizedContainerService.HintSize="3982,575" sap2010:WorkflowViewState.IdRef="Sequence_53">
+      <Parallel sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="Parallel_6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <Parallel sap:VirtualizedContainerService.HintSize="3940,483" sap2010:WorkflowViewState.IdRef="Parallel_5">
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_28">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_56">
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_31">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_60">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "A"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_22" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_42" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_32">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_61">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "B"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_26" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_43" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="830,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_33">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_62">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "C"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_27" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_44" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_45" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_34">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_63">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "D"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_28" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_46" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.9" Profile="Basic" TargetImageBase64="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" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_35">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_64">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "E"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_29" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_47" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAABYAAADcCAYAAAB0x1HpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUFSURBVHhe7dhBUttYEAZgb3IMzsAdWHAPjsAJOEVSUDXZJEegKpU7cAUgLFmAsWEmmZ0mvzu/X+upZb1+UifylBd/WRbyp86v90ySxWq1al5els1yKXl6eurN8/Pz5hp9PY6Z1eplexwJv2xO4CJ80AKZuUw8gyqWy+ftBwvgGVSBiR1w2KqQN7zQApmwKtwTI7joUEVxFc4NkmDEApmwKuazQTwwP1gAz6AKjU0KOzsO3CA4kAuHN4gLRnDRxB2HVaHhSR/eDFaF8+GVVxG4KpwTf/t235yenjaLxWKTo6Oj5uLionl4eGjB7o7v7m6bk5OT5urqcgPc3t42Z2dnzfn5efP4+LiF3VXc399t4MtLgZHr6+vm+Pi4ubm5UXDCCmA98dVOOKwKJ5yqmPjhvZhVWBldRV+qq9Crwko1PHkV3HkfP/5lgkzgd0XCXDBigYy7ChzIhUG/QRALZKrhoY4PVWwTVoV7g+CAF1ogE7bzwqoYAQ+tCvm+0NcTQg5VbFNdhXO5hW0QTxUuOGxVyBu58A+tCsQBH6rYwoFVBMH7uEGC4N+wKobg0Cr4wQI4sAoclMChVTjgwA2CgzJ4Hl9CYatiBl9C+A3DDxbAYRPPoIq5TBy23MKqkDe80AIZ55bevw3iqWIeyy1wVRBGLJABzA8WwPu4QYLg37AqhmDnv0zLq9BYARxYBQ5CYAQXDVWBn/ODBbCnin37PnbCYROXw//7DTKDVXH4a+w2bhgHvNACmbAq5rJBEoxYIBNWhfvhceLhKpx/jfXAxArgfdwgQXBZFfhZDhNheifGw7FQBOgIeGhLJySH6fC9q4oqGOHD4yuP+T7HdAw4neDEGsNrPq0VA1416zWmTnhfNMJjfa4Fr9frnydWv5IeooZyVICE8Jycl3MbmNE/sGIB+pw+v3h9fd3CqISTYyJ9MY/Tufb7dF7BCZe+5Qb6Yry2z/WlAxOXC9pIOq9j36gXzicXtP2nsG8kGYAlOYjwvD6nUwQzGrLO6ZhwjsvFBOS1/bNuCmFWoafL37ezhd/e3hqd/Cb5zST9OHdpBVwxsUaZLgrACQ/jsq4RC0WqYEwq+ARVIITboI0XTQysDQvunrgMllgoYsIa1QEkrxM9vATmE6OKSTuWiQW14aKdx3RvQLwLmxMPg7rjgCpGw0y6Abu1UcQNc8ohvAgmmGc03H8DG0Uq4Ql3no50PAHcvQG7nbzjieAEdmOhiPu7QlLZsYUibVhwC0Uqq2CvIzu2byBTB8CS0avCgkdXYcMhVejlFlAFMikMLHRVWCBTNXFgx7trQExYozoJ5rQ2ioyYeDdeBUsFglsoUgQzhNPE/T2bsIUiCU43sFCkCLZAHlsoYsI/Pn9umsXCzPerqwx2VPHj/XsTRRJc8fD+/fBhg/zz5UtPFUz/wzN/S+dwt+vajn9VYcHyKpO64aEqiPLYDXfy7l3z99evP0FOa6PIKFjwCrh/VaSO5bgSZjTcvkkhvGtVMNKvs+Mc1qBkZMdWut8VDvj7p08mioz6EkLybvsq6YPN7wqNDsNdFDEnzmEm3aCy4xxPYJp0CB71X5DuKnKYIdp+YDZeWUWKhSImrNHdMKZ1TJzDTA73ocjIiftxE85xABa8a+KincckVNaxu4o+XE86hJtwH6hhwXHcRZHq/1YgPmpiRsPtGxTCOZ7AbiwUKYK7N+DEIx8ek+CEWygi8LL5D3AUJYGH+XicAAAAAElFTkSuQmCC" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_36">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_65">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "F"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_23" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_48" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAABMAAADbCAYAAACP66oVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAaoSURBVHhe1drLbhQ5FAbgfhwkFtnwBLwDC1ZkBQtWSCx5jwgEiwEkrgKGQAhMZ4ABJJQwCDLMQO7ck0AaEhJYoJE8/bs4Ltt1XOXjchJm8SuA1J/Ob7vc3RGdjY0NRVlfX1dfvnwxWVtb62dVZ3X1s/r06ZPOysoKm0ZsdbWAPn8WYIDqsQLCTw5CBFjGyTKvWX3N5eXlTdqAJmxTam49Buinqfnhw4dtWrOmmsJztoU1RVhdzY8fP/6kNSuTAUqtiWSrKZ5MhDVNVlcTiy+smRXbrpqA/p81FxcX1eDgoOp0Ok52796tpqam1Lt379LXDJMcOXJE7d27V718+VK9fv06veb9+/fVwMCAGh4e1rAQKyfDiw8fPqz27dun3r59K8fsmnfv3jVTUeWkmjgGhw4dMlPRsUjCxsbG1I4dO9StW7ecYyGuieNx8OBBtX//fvX+/XuNsTUBNU3W7Xb1VPhJEIs1Tba0tKgOHDigY09FNXHWoiebn5/Tp91/Anbu3KkePHig5ubm5BuA2BUx2dLSUh4MR0OMIaHJsMvZJqtggLYMC9XEschaExdjNgyHeGZmJh4L1QSGR+mvv59JJguv2atXr6QYX5OeSxEWqpmE1dVMwAQ1AUlr2ndZ6zWzsSeTT+Mnq6uJ0z8xMdFuA2gyMcbVROi5FE4Wrjk9M92+JoLrZ3rawwCl1MRHhArWPFm1JipuCnbv3h/xGFczGfMnozOWFXvz5o1+LrPUpCu71WSE0ZWdBVtYWNA3xp07t9vXJAwfS7NNtnkYIElNOhpZJrOxPx8/zodNTIyra9eG47FQTdyyDx8+VNevX5NMVo85kwFKqTk7OyvH/JqAkH+eP69iBIYwribemQi7evVXCebWxFT4/E/YpUuX4jG/JibD9QMMN0YrDJMRhhtDhHE1W2D1k507d67EAKXUxC1bwZon42smYvxkT54WV7YIC9XE9TM21lVnz56NXzOuJh5yYKOjo+r06VPt1iwZ42pmm4y+lwMbGRlJx/Bc1mKAJDXxHXM2x2T0hRUYfkGCu0w0WRN28uQv8ZPZNTnsxIkTeWpeuXKlHYb7n7DLly/LML8mPn4SdvHiRRcDFDsZTj8+GOP6YbGmyfyadJfh97VizK5J1w8w/ELzwoUL0sncNdNfpZ8B6/ax8+1q2tj58x4GKKYmXT82dubMGXXs2DF5zRB29OhReU1gfs0ELONkoTW7eXO0igGS1nz06JHGcJcJsepk+Cp948aIOnXqpAzza+L+BzYycl1fjMINKGtuOjY0NBSPNdUUYVta8+fZTXoCut3f9BNw/Pjxllj/pr19+3f5TUs1ETxOxfvmrHkTbv0pCNM9nZzUn2nxppKEUVW83b2YeqHG+9+EcRUl1QRGIN6lpqan1Pj4ePpkCOri14T4no7NaIUh2AxMOD8/X2KAfAwpsRLs9XoOhmBDaidDiv/I5k7X6xWQjzZOhqrF/45bczBANCWhlcl8sMSqa2cH/85iBBZQEUAUH6S/dza+fq1ANuiixXQ2aqfz9QcWC9qH2E+BRUxXgsXu0k+CcHTMZKEJbYxCQDGpNRmmAmRjNuhDVJemLFKg7GQ26GNVsEAdjEvzZMWG0J+Lmt++JWNFis3Qk9VhceCPmnWTIQSGYApQs5schPhYCCwxwWQ+Ztd1ngApZMdMJsEQHzGY2c3E6aiimSy0AU2QHTNZm5oOpifr12w7ncH0CxksFkLKmh5C4TCEgwzWdjfpZ7mbiRglqSYHIQ4WQptAp6Y5FjlqhhCEg5AgVndgkSbMrUlQZE0bsuNiTHyIEsTMOWMwJA0LgCIsa03pBjRj/YQmbMKAuBiDIE2QnQLbjMdpW2oiNkYpJ6NEYByElGsmuLY5pMQCU3EQxQcNZqDtqOmDbk3CIiHExijlmjEQEgshBstWUyOJkJ2ypgBDghggvQmJ01Vr4oWJGMXUlBwNDkKcmhyGVLCVFfV9cFCpTqeS8pzF1lxeVt/37GnAmFQgC/t31y61vrDA1JSAHlbZTY0FwCbMmSxrzfwb0E9oQjnGIEgFsjC+Jl0/wsmCRwMvktZkj0bWmmbxEydzMH2XCR709V5PP+jhmrFT9UOT+DE19YsZUIyZmpHTcUgVi4A4jFKuGQMhSZikpg86NTUigBAbo5Q1E6eyYybTmxAJcoiD6RcymA9RfNBgZgM8KIRxEOLU5DCkCXRqmrViaiJNGMXFmMRCSFlTAHJIFQuAPsaBBstaM/8GUCIwDkLMmnEI4kONmDmwrSdbU/8BVg8I3RFQqssAAAAASUVORK5CYII=" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+        <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,534" sap2010:WorkflowViewState.IdRef="MonitorEvents_37">
+          <ui:MonitorEvents.Handler>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="346,344" sap2010:WorkflowViewState.IdRef="Sequence_66">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="304,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[noteString]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[noteString + "G"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="304,152" sap2010:WorkflowViewState.IdRef="Sequence_67">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_27" Key="a" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="79f640630460d284cdef2571ac8c601b" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
+                  <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Boolean">[flag]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                    </Assign.Value>
+                  </Assign>
                 </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_19" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_38" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_26">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_54">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_25" Key="b" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="79f640630460d284cdef2571ac8c601b" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
-                </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_17" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_36" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="830,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_27">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_55">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_26" Key="c" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="79f640630460d284cdef2571ac8c601b" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
-                </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_18" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_37" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_41" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_22">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_49">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_21" Key="d" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="120c6e1fd9881e22ef5d5678c06a29aa" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
-                </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_13" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_32" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_23">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_50">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_22" Key="e" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="79f640630460d284cdef2571ac8c601b" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
-                </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_14" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_33" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAABYAAADcCAYAAAB0x1HpAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAUFSURBVHhe7dhBUttYEAZgb3IMzsAdWHAPjsAJOEVSUDXZJEegKpU7cAUgLFmAsWEmmZ0mvzu/X+upZb1+UifylBd/WRbyp86v90ySxWq1al5els1yKXl6eurN8/Pz5hp9PY6Z1eplexwJv2xO4CJ80AKZuUw8gyqWy+ftBwvgGVSBiR1w2KqQN7zQApmwKtwTI7joUEVxFc4NkmDEApmwKuazQTwwP1gAz6AKjU0KOzsO3CA4kAuHN4gLRnDRxB2HVaHhSR/eDFaF8+GVVxG4KpwTf/t235yenjaLxWKTo6Oj5uLionl4eGjB7o7v7m6bk5OT5urqcgPc3t42Z2dnzfn5efP4+LiF3VXc399t4MtLgZHr6+vm+Pi4ubm5UXDCCmA98dVOOKwKJ5yqmPjhvZhVWBldRV+qq9Crwko1PHkV3HkfP/5lgkzgd0XCXDBigYy7ChzIhUG/QRALZKrhoY4PVWwTVoV7g+CAF1ogE7bzwqoYAQ+tCvm+0NcTQg5VbFNdhXO5hW0QTxUuOGxVyBu58A+tCsQBH6rYwoFVBMH7uEGC4N+wKobg0Cr4wQI4sAoclMChVTjgwA2CgzJ4Hl9CYatiBl9C+A3DDxbAYRPPoIq5TBy23MKqkDe80AIZ55bevw3iqWIeyy1wVRBGLJABzA8WwPu4QYLg37AqhmDnv0zLq9BYARxYBQ5CYAQXDVWBn/ODBbCnin37PnbCYROXw//7DTKDVXH4a+w2bhgHvNACmbAq5rJBEoxYIBNWhfvhceLhKpx/jfXAxArgfdwgQXBZFfhZDhNheifGw7FQBOgIeGhLJySH6fC9q4oqGOHD4yuP+T7HdAw4neDEGsNrPq0VA1416zWmTnhfNMJjfa4Fr9frnydWv5IeooZyVICE8Jycl3MbmNE/sGIB+pw+v3h9fd3CqISTYyJ9MY/Tufb7dF7BCZe+5Qb6Yry2z/WlAxOXC9pIOq9j36gXzicXtP2nsG8kGYAlOYjwvD6nUwQzGrLO6ZhwjsvFBOS1/bNuCmFWoafL37ezhd/e3hqd/Cb5zST9OHdpBVwxsUaZLgrACQ/jsq4RC0WqYEwq+ARVIITboI0XTQysDQvunrgMllgoYsIa1QEkrxM9vATmE6OKSTuWiQW14aKdx3RvQLwLmxMPg7rjgCpGw0y6Abu1UcQNc8ohvAgmmGc03H8DG0Uq4Ql3no50PAHcvQG7nbzjieAEdmOhiPu7QlLZsYUibVhwC0Uqq2CvIzu2byBTB8CS0avCgkdXYcMhVejlFlAFMikMLHRVWCBTNXFgx7trQExYozoJ5rQ2ioyYeDdeBUsFglsoUgQzhNPE/T2bsIUiCU43sFCkCLZAHlsoYsI/Pn9umsXCzPerqwx2VPHj/XsTRRJc8fD+/fBhg/zz5UtPFUz/wzN/S+dwt+vajn9VYcHyKpO64aEqiPLYDXfy7l3z99evP0FOa6PIKFjwCrh/VaSO5bgSZjTcvkkhvGtVMNKvs+Mc1qBkZMdWut8VDvj7p08mioz6EkLybvsq6YPN7wqNDsNdFDEnzmEm3aCy4xxPYJp0CB71X5DuKnKYIdp+YDZeWUWKhSImrNHdMKZ1TJzDTA73ocjIiftxE85xABa8a+KincckVNaxu4o+XE86hJtwH6hhwXHcRZHq/1YgPmpiRsPtGxTCOZ7AbiwUKYK7N+DEIx8ek+CEWygi8LL5D3AUJYGH+XicAAAAAElFTkSuQmCC" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_29">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_57">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_28" Key="f" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="79f640630460d284cdef2571ac8c601b" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
-                </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_20" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_39" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-          <ui:MonitorEvents ContinueOnError="True" DisplayName="Monitor Events" sap:VirtualizedContainerService.HintSize="456,437" sap2010:WorkflowViewState.IdRef="MonitorEvents_30">
-            <ui:MonitorEvents.Handler>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="args" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Event Handler" sap:VirtualizedContainerService.HintSize="376,247" sap2010:WorkflowViewState.IdRef="Sequence_58">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DisplayName="Send Hotkey 'AfxFrameOrView140u'" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_29" Key="g" KeyModifiers="None">
-                    <ui:SendHotkey.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="79f640630460d284cdef2571ac8c601b" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:SendHotkey.Target>
-                  </ui:SendHotkey>
-                </Sequence>
-              </ActivityAction>
-            </ui:MonitorEvents.Handler>
-            <ui:MonitorEvents.RepeatForever>
-              <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_21" />
-            </ui:MonitorEvents.RepeatForever>
-            <ui:MonitorEvents.Triggers>
-              <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_40" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
-                <ui:ClickImageTrigger.Image>
-                  <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
-                </ui:ClickImageTrigger.Image>
-              </ui:ClickImageTrigger>
-            </ui:MonitorEvents.Triggers>
-          </ui:MonitorEvents>
-        </Parallel>
-      </Sequence>
+              </Sequence>
+            </ActivityAction>
+          </ui:MonitorEvents.Handler>
+          <ui:MonitorEvents.RepeatForever>
+            <Literal x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="Literal`1_24" />
+          </ui:MonitorEvents.RepeatForever>
+          <ui:MonitorEvents.Triggers>
+            <ui:ClickImageTrigger BlockEvent="{x:Null}" ClippingRegion="{x:Null}" DisplayName="Click Image Trigger 'chrome.exe Virtual'" EventType="EVENT_ASYNCHRONOUS" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ClickImageTrigger_49" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' title='Virtual Piano - Online Piano Keyboard | OnlinePianist' /&gt;" TriggerMode="TriggerDown">
+              <ui:ClickImageTrigger.Image>
+                <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" Profile="Basic" TargetImageBase64="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" />
+              </ui:ClickImageTrigger.Image>
+            </ui:ClickImageTrigger>
+          </ui:MonitorEvents.Triggers>
+        </ui:MonitorEvents>
+      </Parallel>
     </While>
+    <ui:ForEach x:TypeArguments="x:Char" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="533,414" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[noteString]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:Char">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Char" Name="item" />
+          </ActivityAction.Argument>
+          <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[item]" sap:VirtualizedContainerService.HintSize="497,279" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+            <Switch.Default>
+              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_14" Text="[&quot;Error&quot; + item]" />
+            </Switch.Default>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="A" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_32" Key="a" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="B" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_33" Key="b" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="C" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_34" Key="c" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="D" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_35" Key="d" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="E" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_36" Key="e" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="F" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_37" Key="f" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" x:Key="G" Activate="True" sap:VirtualizedContainerService.HintSize="334,155" sap2010:WorkflowViewState.IdRef="SendHotkey_38" Key="g" KeyModifiers="None">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="36a3f172b62053e5267b76e5226331c6" Selector="&lt;wnd app='finale.exe' cls='Finale' title='Finale - [Untitled1]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='Afx:*' title='Untitled1' /&gt;&lt;wnd cls='AfxFrameOrView140u' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+          </Switch>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
   </Sequence>
 </Activity>
